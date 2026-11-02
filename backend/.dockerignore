@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+.tmp
+.env
+src/generated
+tests
+docker
+*.log
+.DS_Store
