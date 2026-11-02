@@ -1,0 +1,6 @@
+services:
+  frontend:
+    build: .
+    container_name: candidate-kit-frontend
+    ports:
+      - '5173:80'
