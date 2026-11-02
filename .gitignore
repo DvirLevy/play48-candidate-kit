@@ -1,0 +1,4 @@
+# PROJECT_SPEC.md contains API keys in plain text: never commit it
+PROJECT_SPEC.md
+.DS_Store
+.tmp
