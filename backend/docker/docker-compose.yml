@@ -1,0 +1,50 @@
+# Run from the backend folder via the npm scripts:
+#   npm run docker:db    -> Postgres only
+#   npm run docker:api   -> API only (--no-deps, expects Postgres to be reachable)
+#   npm run docker:up    -> both
+name: candidate-kit
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: candidate-kit-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-candidate_kit}
+    ports:
+      - '${POSTGRES_PORT:-5433}:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: candidate-kit-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - ../.env
+    environment:
+      # Inside the compose network Postgres is reachable by service name on 5432
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-candidate_kit}
+      INPUT_IMAGE_PATH: /data/assets/input_character_white_shirt.png
+      OUTPUT_DIR: /data/output
+      WORK_DIR: /tmp/work
+    ports:
+      - '${PORT:-4000}:${PORT:-4000}'
+    volumes:
+      - ../../assets:/data/assets:ro
+      - ../../output:/data/output
+
+volumes:
+  postgres_data:
