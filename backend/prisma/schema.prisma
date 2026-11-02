@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum GenerationStatus {
+  QUEUED
+  EDITING_IMAGE
+  GENERATING_VIDEO
+  EXTRACTING_FRAMES
+  BUILDING_SPRITESHEET
+  COMPLETED
+  FAILED
+}
+
+model Generation {
+  id            String           @id @default(uuid())
+  prompt        String
+  status        GenerationStatus @default(QUEUED)
+  errorMessage  String?
+  // Per-step wall clock timings, in milliseconds
+  imageGenerationMs  Int?
+  videoGenerationMs  Int?
+  frameExtractionMs  Int?
+  spritesheetBuildMs Int?
+  totalMs            Int?
+  // Output artifacts for this run, relative to OUTPUT_DIR
+  artifacts     Json?
+  providerCalls Json?
+  frameCount    Int?
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
