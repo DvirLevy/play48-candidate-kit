@@ -1,0 +1,12 @@
+# Whole stack: Postgres + backend API + frontend.
+# Run through ./scripts/docker.sh (it passes backend/.env for variable substitution).
+#
+# Each part keeps its own compose file, so it can still be run alone:
+#   backend:  cd backend && npm run docker:db | docker:api
+#   frontend: cd frontend && docker compose up --build
+name: candidate-kit
+
+include:
+  - path: backend/docker/docker-compose.yml
+    env_file: backend/.env
+  - path: frontend/docker-compose.yml
