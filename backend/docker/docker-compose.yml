@@ -41,7 +41,7 @@ services:
       OUTPUT_DIR: /data/output
       WORK_DIR: /tmp/work
     ports:
-      - '${PORT:-4000}:${PORT:-4000}'
+      - '${PORT:-4001}:${PORT:-4000}'
     volumes:
       - ../../assets:/data/assets:ro
       - ../../output:/data/output
