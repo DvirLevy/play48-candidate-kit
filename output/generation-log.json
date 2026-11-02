@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-11-02T16:17:12.808Z",
+  "completedAt": "2026-11-02T16:20:40.076Z",
+  "inputImage": "input_character_white_shirt.png",
+  "initialPrompt": "Change the shirt to blue and generate a walking animation loop.",
+  "providerCalls": [
+    {
+      "provider": "openai",
+      "model": "gpt-image-2",
+      "type": "image",
+      "timestamp": "2026-11-02T16:17:24.368Z",
+      "success": true,
+      "requestSummary": "Edit input character: \"Change the shirt to blue and generate a walking animation loop.\"",
+      "responseSummary": "Returned edited image (1359829 bytes)."
+    },
+    {
+      "provider": "fal",
+      "model": "bytedance/seedance-2.5/image-to-video",
+      "type": "video",
+      "timestamp": "2026-11-02T16:20:39.893Z",
+      "success": true,
+      "requestSummary": "Animate edited image for 4s: \"Change the shirt to blue and generate a walking animation loop.\"",
+      "responseSummary": "Returned 4s mp4 (270031 bytes)."
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "costEstimateUsd": 2.7
+}
