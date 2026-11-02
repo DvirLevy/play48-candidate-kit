@@ -2,3 +2,9 @@
 PROJECT_SPEC.md
 .DS_Store
 .tmp
+
+# Never commit env files
+.env
+**/.env
+.env.*
+**/.env.*
